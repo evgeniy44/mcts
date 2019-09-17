@@ -4,7 +4,7 @@ class Edge:
         # self.id = in_node.state.id + '|' + out_node.state.id
         self.in_node = in_node
         self.out_node = out_node
-        # self.playerTurn = in_node.state.playerTurn
+        self.player_turn = in_node.state.whose_turn()
         self.action = action
 
         self.stats = {

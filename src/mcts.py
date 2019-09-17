@@ -42,14 +42,14 @@ class MCTS:
         return current_node, value, done, breadcrumbs
 
 
-    def backFill(self, leaf, value, breadcrumbs):
+    def backfill(self, leaf, value, breadcrumbs):
         # lg.logger_mcts.info('------DOING BACKFILL------')
 
-        current_player = leaf.state.playerTurn
+        current_player = leaf.state.whose_turn()
 
         for edge in breadcrumbs:
-            playerTurn = edge.player_turn
-            if playerTurn == current_player:
+            player_turn = edge.player_turn
+            if player_turn == current_player:
                 direction = 1
             else:
                 direction = -1

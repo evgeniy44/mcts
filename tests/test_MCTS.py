@@ -39,3 +39,32 @@ class TestMCTS(TestCase):
 		self.assertEquals(done, 0)
 		self.assertEquals(False, 0)
 		self.assertEquals(True, 1)
+
+	def test_backfill(self):
+		game_root = Game()
+		root = Node(game_root)
+		position1 = game_root.move(game_root.get_possible_moves()[0])
+		child1 = Node(position1)
+		edge1 = Edge(root, child1, 0.3, game_root.get_possible_moves()[0])
+
+		position2 = position1.move(position1.get_possible_moves()[0])
+		child2 = Node(position2)
+		edge2 = Edge(child1, child2, 0.2, game_root.get_possible_moves()[0])
+		edge2.stats['N'] = 4
+		edge2.stats['W'] = 1
+
+		mcts = MCTS(root, {
+			'ALPHA': 0.8,
+			'CPUCT': 1,
+			'EPSILON': 0.2
+		})
+
+		mcts.backfill(child2, -1, [edge2, edge1])
+
+		self.assertEquals(edge2.stats['N'], 5)
+		self.assertEquals(edge2.stats['W'], 2)
+		self.assertEquals(edge2.stats['Q'], 2/5)
+
+		self.assertEquals(edge1.stats['N'], 1)
+		self.assertEquals(edge1.stats['W'], -1)
+		self.assertEquals(edge1.stats['Q'], -1)

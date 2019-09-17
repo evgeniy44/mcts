@@ -1,5 +1,5 @@
 import unittest
-from src.checkers import Game
+from src.checkers.game import Game
 
 class TestPossibleMoves(unittest.TestCase):
 
