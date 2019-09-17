@@ -1,8 +1,8 @@
 from unittest import TestCase
 
-from edge import Edge
-from node import Node
-from puct import PUCT
+from src.edge import Edge
+from src.node import Node
+from src.puct import PUCT
 
 import numpy as np
 
@@ -23,8 +23,8 @@ class TestPUCT(TestCase):
         simulation_edge = puct.puct(parent_node, is_root=True)
 
         self.assertEquals(simulation_edge.action, 35)
-        self.assertEquals(simulation_edge.inNode.state['id'], 0)
-        self.assertEquals(simulation_edge.outNode.state['id'], 1)
+        self.assertEquals(simulation_edge.in_node.state['id'], 0)
+        self.assertEquals(simulation_edge.out_node.state['id'], 1)
 
     def test_puct_non_root_node(self):
         np.random.seed(1)
@@ -40,8 +40,8 @@ class TestPUCT(TestCase):
         simulation_edge = puct.puct(parent_node, is_root=False)
 
         self.assertEquals(simulation_edge.action, 29)
-        self.assertEquals(simulation_edge.inNode.state['id'], 0)
-        self.assertEquals(simulation_edge.outNode.state['id'], 1)
+        self.assertEquals(simulation_edge.in_node.state['id'], 0)
+        self.assertEquals(simulation_edge.out_node.state['id'], 1)
 
     def test_puct_non_root_node_exploration(self):
         np.random.seed(1)
@@ -78,5 +78,5 @@ class TestPUCT(TestCase):
         simulation_edge = puct.puct(parent_node, is_root=False)
 
         self.assertEquals(simulation_edge.action, 38)
-        self.assertEquals(simulation_edge.inNode.state['id'], 0)
-        self.assertEquals(simulation_edge.outNode.state['id'], 4)
+        self.assertEquals(simulation_edge.in_node.state['id'], 0)
+        self.assertEquals(simulation_edge.out_node.state['id'], 4)
