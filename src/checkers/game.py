@@ -1,4 +1,5 @@
 from .board import Board
+import numpy as np
 
 
 class Game:
@@ -41,3 +42,27 @@ class Game:
 
 	def whose_turn(self):
 		return self.board.player_turn
+
+	def render(self):
+		rows = [
+			np.full(shape=8, fill_value=0),
+			np.full(shape=8, fill_value=0),
+			np.full(shape=8, fill_value=0),
+			np.full(shape=8, fill_value=0),
+			np.full(shape=8, fill_value=0),
+			np.full(shape=8, fill_value=0),
+			np.full(shape=8, fill_value=0),
+			np.full(shape=8, fill_value=0)
+		]
+		for piece in self.board.pieces:
+			if piece.position == None:
+				continue
+			y = (piece.position - 1) // 4
+			x = (3 - ((piece.position - 1) % 4)) * 2
+			if y % 2 == 1:
+				x = x + 1
+			rows[y][x] = piece.player
+
+		print("Current game state: ")
+		for i in range(7, -1, -1):
+			print(rows[i])

@@ -5,6 +5,7 @@ class TestPossibleMoves(unittest.TestCase):
 
 	def test_possible_moves(self):
 		self.game = Game()
+		self.game.render()
 
 		self.expect([[9, 13], [9, 14], [10, 14], [10, 15], [11, 15], [11, 16], [12, 16]]).move([10, 14])
 		self.expect([[21, 17], [22, 17], [22, 18], [23, 18], [23, 19], [24, 19], [24, 20]]).move([23, 18])
@@ -18,7 +19,9 @@ class TestPossibleMoves(unittest.TestCase):
 		self.expect([[14, 9], [22, 18], [24, 19], [24, 20], [25, 21], [26, 23], [31, 27], [32, 27]]).move([31, 27])
 		self.expect([[5, 9], [6, 9], [10, 15], [11, 15], [11, 16], [12, 16]]).move([11, 16])
 		self.expect([[14, 9], [22, 18], [24, 19], [24, 20], [25, 21], [26, 23], [27, 23]]).move([22, 18])
+		self.game.render()
 		self.expect([[13, 22]]).move([13, 22])
+
 		self.expect([[22, 31]]).move([22, 31]) #double jump where 10-17 is also in a jumpable position if not for piece restriction
 		self.expect([[14, 9], [18, 15], [24, 19], [24, 20], [25, 21], [25, 22], [27, 23], [30, 26]]).move([24, 19])
 		self.expect([[10, 17], [16, 23], [31, 24]]).move([31, 24])
