@@ -10,8 +10,8 @@ class DirectionResolver:
 		pass
 
 	def resolve_direction_and_distance(self, move):
-		x1, y1 = self.__get_coordinates(move[0])
-		x2, y2 = self.__get_coordinates(move[1])
+		x1, y1 = self.get_coordinates(move[0])
+		x2, y2 = self.get_coordinates(move[1])
 
 		if abs(x2 - x1) != abs(y2 - y1):
 			raise Exception("looks like illegal move: " + str(move))
@@ -24,7 +24,7 @@ class DirectionResolver:
 		if x2 < x1 and y2 > y1:
 			return NORTH_WEST, abs(x2 - x1)
 
-	def __get_coordinates(self, position):
+	def get_coordinates(self, position):
 		y = (position - 1) // 4
 		x = (3 - ((position - 1) % 4)) * 2
 		if y % 2 == 1:

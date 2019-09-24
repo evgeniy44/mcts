@@ -1,6 +1,8 @@
 from .board import Board
 import numpy as np
 
+PLAYER_TURN_POSITION = 32
+
 
 class Game:
 
@@ -40,8 +42,24 @@ class Game:
 	def get_possible_moves(self):
 		return self.board.get_possible_moves()
 
+	def get_possible_moves_from_current_player_perspective(self):
+		if self.whose_turn() == 1:
+			return self.board.get_possible_moves()
+		else:
+			return list(map(self.convert_move_to_black_perspective, self.board.get_possible_moves()))
+
+	def convert_move_to_black_perspective(self, move):
+		return list(map(lambda x: 33 - x, move))
+
 	def whose_turn(self):
 		return self.board.player_turn
+
+	def id(self):
+		id = np.zeros(33)
+		id[PLAYER_TURN_POSITION] = self.whose_turn()
+		for piece in self.board.pieces:
+			id[piece.position - 1] = piece.player
+		return id
 
 	def render(self):
 		rows = [
@@ -55,7 +73,7 @@ class Game:
 			np.full(shape=8, fill_value=0)
 		]
 		for piece in self.board.pieces:
-			if piece.position == None:
+			if piece.position is None:
 				continue
 			y = (piece.position - 1) // 4
 			x = (3 - ((piece.position - 1) % 4)) * 2
