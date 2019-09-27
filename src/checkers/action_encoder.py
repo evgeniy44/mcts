@@ -19,9 +19,9 @@ class ActionEncoder:
 								newshape=(POSITIONS_COUNT * DIRECTIONS_COUNT * DISTANCES_COUNT, 1)))
 
 	def convert_actions_to_values(self, actions):
-		return list(map(self.__convert_action_to_value, actions))
+		return list(map(self.convert_action_to_action_id, actions))
 
-	def __convert_action_to_value(self, action):
+	def convert_action_to_action_id(self, action):
 		direction, distance = self.direction_resolver.resolve_direction_and_distance(action)
 		return action[0] + POSITIONS_COUNT * (direction - 1) + POSITIONS_COUNT * DIRECTIONS_COUNT * (distance - 1) - 1
 
