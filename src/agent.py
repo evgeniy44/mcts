@@ -10,7 +10,8 @@ import random
 
 class Agent:
 
-	def __init__(self, model, action_encoder, config):
+	def __init__(self, model, action_encoder, name, config):
+		self.name = name
 		self.action_encoder = action_encoder
 		self.action_size = config['ACTION_SIZE']
 		self.model = model

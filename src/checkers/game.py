@@ -54,6 +54,12 @@ class Game:
 	def whose_turn(self):
 		return self.board.player_turn
 
+	def opposite_turn(self):
+		if self.board.player_turn == 1:
+			return 2
+		else:
+			return 1
+
 	def id(self):
 		id = np.zeros(33)
 		id[PLAYER_TURN_POSITION] = self.whose_turn()
