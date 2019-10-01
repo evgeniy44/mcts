@@ -19,7 +19,7 @@ class TestAgent(TestCase):
 			'ACTION_SIZE': 32 * 4 * 7,
 			'MCTS_SIMULATIONS': 3
 		}
-		agent = Agent(model=None, action_encoder=ActionEncoder(DirectionResolver()), config=config)
+		agent = Agent(model=None, action_encoder=ActionEncoder(DirectionResolver()), name='player1', config=config)
 		game_root = Game()
 		root_node = Node(game_root)
 
