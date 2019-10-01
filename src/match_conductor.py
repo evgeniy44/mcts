@@ -68,10 +68,10 @@ class MatchConductor:
 				if state.is_over() == 1:
 					if memory is not None:
 						for move in memory.stmemory:
-							if move['playerTurn'] == state.playerTurn:
-								move['value'] = value
+							if move['state'].whose_turn() == state.whose_turn():
+								move['value'] = -1
 							else:
-								move['value'] = -value
+								move['value'] = 1
 						memory.commit_ltmemory()
 
 					if state.get_winner() == 1 or state.get_winner() == 2:
