@@ -28,7 +28,7 @@ class TestMatchConductor(TestCase):
 		next_state.whose_turn.return_value = 2
 		next_state.opposite_turn.return_value = 1
 
-		player1.act.return_value = ([9, 14], np.full(shape=(1, 32 * 4 * 7), fill_value=0.1))
+		player1.act.return_value = ([9, 14], np.full(shape=(1, 32 * 4 * 7), fill_value=0.1), 1)
 
 		type(player1).name = PropertyMock(return_value='player1')
 		type(player2).name = PropertyMock(return_value='player2')
@@ -68,8 +68,8 @@ class TestMatchConductor(TestCase):
 		next_next_state.whose_turn.return_value = 1
 		next_next_state.opposite_turn.return_value = 2
 
-		player1.act.return_value = ([9, 14], np.full(shape=(1, 32 * 4 * 7), fill_value=0.1))
-		player2.act.return_value = ([9, 14], np.full(shape=(1, 32 * 4 * 7), fill_value=0.2))
+		player1.act.return_value = ([9, 14], np.full(shape=(1, 32 * 4 * 7), fill_value=0.1), 1)
+		player2.act.return_value = ([9, 14], np.full(shape=(1, 32 * 4 * 7), fill_value=0.2), 1)
 
 		type(player1).name = PropertyMock(return_value='player1')
 		type(player2).name = PropertyMock(return_value='player2')
@@ -109,8 +109,8 @@ class TestMatchConductor(TestCase):
 		next_next_state.whose_turn.return_value = 1
 		next_next_state.opposite_turn.return_value = 2
 
-		player1.act.return_value = ([9, 14], np.full(shape=(1, 32 * 4 * 7), fill_value=0.1))
-		player2.act.return_value = ([9, 14], np.full(shape=(1, 32 * 4 * 7), fill_value=0.2))
+		player1.act.return_value = ([9, 14], np.full(shape=(1, 32 * 4 * 7), fill_value=0.1), 1)
+		player2.act.return_value = ([9, 14], np.full(shape=(1, 32 * 4 * 7), fill_value=0.2), 1)
 
 		type(player1).name = PropertyMock(return_value='player1')
 		type(player2).name = PropertyMock(return_value='player2')
@@ -151,7 +151,7 @@ class TestMatchConductor(TestCase):
 		next_state.whose_turn.return_value = 2
 		next_state.opposite_turn.return_value = 1
 
-		player1.act.return_value = ([9, 14], np.full(shape=(1, 32 * 4 * 7), fill_value=0.1))
+		player1.act.return_value = ([9, 14], np.full(shape=(1, 32 * 4 * 7), fill_value=0.1), 1)
 
 		type(player1).name = PropertyMock(return_value='player1')
 		type(player2).name = PropertyMock(return_value='player2')
