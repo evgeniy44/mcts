@@ -34,7 +34,7 @@ class Agent:
 		for sim in range(self.mcts_simulations):
 			self.simulate()
 		pi, values = self.get_action_values()
-		action, value = self.choose_action(pi, values, tau)
+		action, value = self.choose_action(pi, values, tau, state.whose_turn())
 		return action, pi, value
 
 	def prepare_mcts_for_next_action(self, state):
@@ -62,7 +62,7 @@ class Agent:
 		pi = pi / (np.sum(pi) * 1.0)
 		return pi, values
 
-	def choose_action(self, pi, values, tau):
+	def choose_action(self, pi, values, tau, whose_turn):
 		if tau == 0:
 			actions = np.argwhere(pi == max(pi))
 			action = random.choice(actions)[0]
@@ -72,7 +72,7 @@ class Agent:
 
 		value = values[action]
 
-		return self.action_encoder.convert_action_id_to_move(action), value
+		return self.action_encoder.convert_action_id_to_move_true_perspective(action, whose_turn), value
 
 	def replay(self, ltmemory):
 		# lg.logger_mcts.info('******RETRAINING MODEL******')

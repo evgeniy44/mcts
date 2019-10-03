@@ -21,9 +21,25 @@ class Game:
 		board = self.board.create_new_board_from_move(move)
 		moves = self.moves[:]
 		moves.append(move)
-		moves_since_last_capture = 0 if board.previous_move_was_capture else self.moves_since_last_capture + 1
+		moves_since_last_capture = 0 if board.previous_move_was_capture else self.moves_since_last_capture + 1 # todo capture back
 
 		return Game(board=board, moves=moves, moves_since_last_capture=moves_since_last_capture)
+
+	def move_with_additional_jumps(self, move):
+		destination = move[1]
+		next_state = self.move(move)
+		has_next_jump, next_move = next_state.has_next_jump(destination)
+		while has_next_jump:
+			next_state = next_state.move(next_move)
+			destination = next_move[1]
+			has_next_jump, next_move = next_state.has_next_jump(destination)
+		return next_state
+
+	def has_next_jump(self, from_):
+		for next_move in self.get_possible_moves():
+			if next_move[0] == from_:
+				return True, next_move
+		return False, None
 
 	def move_limit_reached(self):
 		return self.moves_since_last_capture >= self.consecutive_noncapture_move_limit
@@ -38,6 +54,14 @@ class Game:
 			return 1
 		else:
 			return None
+
+	def get_winner_for_learning(self):
+		winner = self.get_winner()
+		if winner == 2:
+			return -1
+		elif winner == 1:
+			return 1
+		return 0
 
 	def get_possible_moves(self):
 		return self.board.get_possible_moves()

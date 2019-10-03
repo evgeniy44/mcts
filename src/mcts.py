@@ -31,14 +31,14 @@ class MCTS:
 
         while not current_node.is_leaf():
             simulation_edge = self.puct.puct(current_node, is_root=current_node == self.root)
-            game = current_node.state.move(
+            game = current_node.state.move_with_additional_jumps(
                 self.action_encoder.convert_action_id_to_move_true_perspective(simulation_edge.action,
                                                                                simulation_edge.player_turn))
             done = game.is_over()
             if not done:
                 value = 0
             else:
-                value = game.get_winner()
+                value = game.get_winner_for_learning()
             current_node = simulation_edge.out_node
             breadcrumbs.append(simulation_edge)
         return current_node, value, done, breadcrumbs
@@ -60,7 +60,7 @@ class MCTS:
     def evaluate_leaf(self, leaf):
         value, probs, allowed_actions = self.predict_state_value(leaf.state)
         for action in allowed_actions:
-            new_state = leaf.state.move(
+            new_state = leaf.state.move_with_additional_jumps(
                 self.action_encoder.convert_action_id_to_move_true_perspective(action, leaf.state.whose_turn()))
             if new_state.id not in self.tree:
                 node = Node(new_state)
