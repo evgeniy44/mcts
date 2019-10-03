@@ -25,7 +25,7 @@ class Agent:
 
 	def simulate(self):
 		leaf, value, done, breadcrumbs = self.mcts.move_to_leaf()
-		if done is False:
+		if not done:
 			value = self.mcts.evaluate_leaf(leaf)
 		self.mcts.backfill(leaf, value, breadcrumbs)
 

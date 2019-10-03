@@ -5,6 +5,7 @@ from src.agent import Agent
 from src.checkers.action_encoder import ActionEncoder
 from src.checkers.direction_resolver import DirectionResolver
 from src.checkers.game import Game
+from src.checkers.state_encoder import StateEncoder
 from src.edge import Edge
 from src.node import Node
 
@@ -19,7 +20,7 @@ class TestAgent(TestCase):
 			'ACTION_SIZE': 32 * 4 * 7,
 			'MCTS_SIMULATIONS': 3
 		}
-		agent = Agent(model=None, action_encoder=ActionEncoder(DirectionResolver()), name='player1', config=config)
+		agent = Agent(model=None, action_encoder=ActionEncoder(DirectionResolver()), state_encoder=StateEncoder(), name='player1', config=config)
 		game_root = Game()
 		root_node = Node(game_root)
 
