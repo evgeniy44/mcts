@@ -39,17 +39,23 @@ class GameTest(TestCase):
 	def test_move_with_jumps(self): #TODO fix
 		game = Game()
 
-		game = game.move_with_additional_jumps([9, 13])
-		self.assertEqual(game.moves, [[9, 13]])
+		game = game.move_with_additional_jumps([12, 16])
+		self.assertEqual(game.moves, [[12, 16]])
 
 		game = game.move_with_additional_jumps([23, 18])
-		self.assertEqual(game.moves, [[9, 13], [23, 18]])
+		self.assertEqual(game.moves, [[12, 16], [23, 18]])
 
-		game = game.move_with_additional_jumps([12, 16])
-		self.assertEqual(game.moves, [[9, 13], [23, 18], [12, 16]])
+		game = game.move_with_additional_jumps([8, 12])
+		self.assertEqual(game.moves, [[12, 16], [23, 18], [8, 12]])
 
-		game = game.move_with_additional_jumps([22, 17])
-		self.assertEqual(game.moves, [[9, 13], [23, 18], [12, 16], [22, 17]])
+		game = game.move_with_additional_jumps([27, 23])
+		self.assertEqual(game.moves, [[12, 16], [23, 18], [8, 12], [27, 23]])
 
-		game = game.move_with_additional_jumps([13, 22])
-		self.assertEqual(game.moves, [[9, 13], [23, 18], [12, 16], [22, 17], [13, 22]])
+		game = game.move_with_additional_jumps([4, 8])
+		self.assertEqual(game.moves, [[12, 16], [23, 18], [8, 12], [27, 23], [4, 8]])
+
+		game = game.move_with_additional_jumps([18, 14])
+		self.assertEqual(game.moves, [[12, 16], [23, 18], [8, 12], [27, 23], [4, 8], [18, 14]])
+
+		game = game.move_with_additional_jumps([9, 18])
+		self.assertEqual(game.moves, [[12, 16], [23, 18], [8, 12], [27, 23], [4, 8], [18, 14], [9, 18], [18, 27]])
