@@ -55,7 +55,7 @@ while 1:
 
 	match_conductor = MatchConductor()
 	print('SELF PLAYING ' + str(config['EPISODES_COUNT']) + ' EPISODES...')
-	_, memory, _, _ = match_conductor.play_matches(best_player, best_player, config['EPISODES_COUNT'],
+	_, memory = match_conductor.play_matches(best_player, best_player, config['EPISODES_COUNT'],
 								  turns_until_tau0=config['TURNS_UNTIL_TAU0'], memory=memory)
 	print('\n')
 
@@ -68,12 +68,12 @@ while 1:
 		print('')
 
 		print('TOURNAMENT...')
-		scores, _, points, sp_scores = match_conductor.play_matches(best_player, current_player, config['EVAL_EPISODES'],
+		scores, _ = match_conductor.play_matches(best_player, current_player, config['EVAL_EPISODES'],
 												   turns_until_tau0=0, memory=None)
 		print('\nSCORES')
 		print(scores)
-		print('\nSTARTING PLAYER / NON-STARTING PLAYER SCORES')
-		print(sp_scores)
+		# print('\nSTARTING PLAYER / NON-STARTING PLAYER SCORES')
+		# print(sp_scores)
 		# print(points)
 
 		print('\n\n')
@@ -81,4 +81,4 @@ while 1:
 		if scores['current_player'] > scores['best_player'] * config['SCORING_THRESHOLD']:
 			best_player_version = best_player_version + 1
 			best_NN.model.set_weights(current_NN.model.get_weights())
-			best_NN.write(env.name, best_player_version)
+			# best_NN.write(env.name, best_player_version)
