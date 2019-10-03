@@ -19,11 +19,20 @@ class ActionEncoder:
 								newshape=(POSITIONS_COUNT * DIRECTIONS_COUNT * DISTANCES_COUNT, 1)))
 
 	def convert_actions_to_values(self, actions):
-		return list(map(self.convert_action_to_action_id, actions))
+		return list(map(self.convert_move_to_action_id, actions))
 
-	def convert_action_to_action_id(self, action):
+	def convert_move_to_action_id(self, action):
 		direction, distance = self.direction_resolver.resolve_direction_and_distance(action)
 		return action[0] + POSITIONS_COUNT * (direction - 1) + POSITIONS_COUNT * DIRECTIONS_COUNT * (distance - 1) - 1
+
+	def convert_action_id_to_move_true_perspective(self, action_id, whose_turn):
+		move = self.convert_action_id_to_move(action_id)
+		if whose_turn == 1:
+			return move
+		move_true_perspective = []
+		for position in move:
+			move_true_perspective.append(33 - position)
+		return move_true_perspective
 
 	def convert_action_id_to_move(self, action_id):
 		from_ = self.direction_resolver.get_coordinates(action_id % POSITIONS_COUNT + 1)

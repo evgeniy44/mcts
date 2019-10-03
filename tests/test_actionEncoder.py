@@ -66,3 +66,23 @@ class TestActionEncoder(TestCase):
 		encoder = ActionEncoder(DirectionResolver())
 		move = encoder.convert_action_id_to_move(105)
 		self.assertEqual(move, [10, 15])
+
+	def test_convert_action_id_to_move_true_perspective_1(self):
+		encoder = ActionEncoder(DirectionResolver())
+		move = encoder.convert_action_id_to_move_true_perspective(137, 1)
+		self.assertEqual(move, [10, 17])
+
+	def test_convert_action_id_to_move_true_perspective_2(self):
+		encoder = ActionEncoder(DirectionResolver())
+		move = encoder.convert_action_id_to_move_true_perspective(105, 1)
+		self.assertEqual(move, [10, 15])
+
+	def test_convert_action_id_to_move_true_perspective_3(self):
+		encoder = ActionEncoder(DirectionResolver())
+		move = encoder.convert_action_id_to_move_true_perspective(137, 2)
+		self.assertEqual(move, [23, 16])
+
+	def test_convert_action_id_to_move_true_perspective_4(self):
+		encoder = ActionEncoder(DirectionResolver())
+		move = encoder.convert_action_id_to_move_true_perspective(105, 2)
+		self.assertEqual(move, [23, 18])

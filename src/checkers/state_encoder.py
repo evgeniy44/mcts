@@ -10,6 +10,8 @@ class StateEncoder:
 		encoded_state = np.zeros(32)
 
 		for piece in state.board.pieces:
+			if piece.captured:
+				continue
 			if state.whose_turn() == 1:
 				if piece.player == state.whose_turn():
 					if piece.king:

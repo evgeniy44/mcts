@@ -56,9 +56,8 @@ class Agent:
 		values = np.zeros(self.action_size, dtype=np.float32)
 
 		for edge in edges:
-			action_id = self.action_encoder.convert_action_to_action_id(edge.action)
-			pi[action_id] = edge.stats['N']
-			values[action_id] = edge.stats['Q']
+			pi[edge.action] = edge.stats['N']
+			values[edge.action] = edge.stats['Q']
 
 		pi = pi / (np.sum(pi) * 1.0)
 		return pi, values

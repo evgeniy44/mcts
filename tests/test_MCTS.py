@@ -18,11 +18,12 @@ class TestMCTS(TestCase):
     def test_move_to_leaf(self):
         game = Game()
         root = Node(game)
+        action_encoder = ActionEncoder(DirectionResolver())
         mcts = MCTS(root, config={
             'ALPHA': 0.8,
             'CPUCT': 1,
             'EPSILON': 0.2
-        }, model=None, state_encoder=None, action_encoder=None)
+        }, model=None, state_encoder=None, action_encoder=action_encoder)
 
         puct = MagicMock()
         mcts.puct = puct
@@ -30,9 +31,9 @@ class TestMCTS(TestCase):
         child1 = Node(game.move(game.get_possible_moves()[0]))
         child2 = Node(game.move(game.get_possible_moves()[1]))
         child3 = Node(game.move(game.get_possible_moves()[2]))
-        edge1 = Edge(root, child1, 0.33, game.get_possible_moves()[0])
-        edge2 = Edge(root, child2, 0.34, game.get_possible_moves()[1])
-        edge3 = Edge(root, child3, 0.33, game.get_possible_moves()[2])
+        edge1 = Edge(root, child1, 0.33, action_encoder.convert_move_to_action_id(game.get_possible_moves()[0]))
+        edge2 = Edge(root, child2, 0.34, action_encoder.convert_move_to_action_id(game.get_possible_moves()[1]))
+        edge3 = Edge(root, child3, 0.33, action_encoder.convert_move_to_action_id(game.get_possible_moves()[2]))
         root.edges.append(edge1)
         root.edges.append(edge2)
         root.edges.append(edge3)
@@ -49,13 +50,14 @@ class TestMCTS(TestCase):
     def test_backfill(self):
         game_root = Game()
         root = Node(game_root)
+        action_encoder = ActionEncoder(DirectionResolver())
         position1 = game_root.move(game_root.get_possible_moves()[0])
         child1 = Node(position1)
-        edge1 = Edge(root, child1, 0.3, game_root.get_possible_moves()[0])
+        edge1 = Edge(root, child1, 0.3, action_encoder.convert_move_to_action_id(game_root.get_possible_moves()[0]))
 
         position2 = position1.move(position1.get_possible_moves()[0])
         child2 = Node(position2)
-        edge2 = Edge(child1, child2, 0.2, game_root.get_possible_moves()[0])
+        edge2 = Edge(child1, child2, 0.2, action_encoder.convert_move_to_action_id(game_root.get_possible_moves()[0]))
         edge2.stats['N'] = 4
         edge2.stats['W'] = 1
 
@@ -63,7 +65,7 @@ class TestMCTS(TestCase):
             'ALPHA': 0.8,
             'CPUCT': 1,
             'EPSILON': 0.2
-        }, model=None, state_encoder=None, action_encoder=None)
+        }, model=None, state_encoder=None, action_encoder=action_encoder)
 
         mcts.backfill(child2, -1, [edge2, edge1])
 

@@ -20,25 +20,26 @@ class TestAgent(TestCase):
 			'ACTION_SIZE': 32 * 4 * 7,
 			'MCTS_SIMULATIONS': 3
 		}
-		agent = Agent(model=None, action_encoder=ActionEncoder(DirectionResolver()), state_encoder=StateEncoder(), name='player1', config=config)
+		action_encoder = ActionEncoder(DirectionResolver())
+		agent = Agent(model=None, action_encoder=action_encoder, state_encoder=StateEncoder(), name='player1', config=config)
 		game_root = Game()
 		root_node = Node(game_root)
 
 		child1 = Node(game_root.move(game_root.get_possible_moves()[0]))
-		edge1 = Edge(root_node, child1, 0.33, [9, 13])
+		edge1 = Edge(root_node, child1, 0.33, 8)
 		edge1.stats['N'] = 10
 		edge1.stats['Q'] = 0.2
 
 		root_node.edges.append(edge1)
 
 		child2 = Node(game_root.move(game_root.get_possible_moves()[1]))
-		edge2 = Edge(root_node, child2, 0.5, [9, 14])
+		edge2 = Edge(root_node, child2, 0.5, 104)
 		edge2.stats['N'] = 20
 		edge2.stats['Q'] = 0.5
 		root_node.edges.append(edge2)
 
 		child3 = Node(game_root.move(game_root.get_possible_moves()[2]))
-		edge3 = Edge(root_node, child3, 0.17, [10, 14])
+		edge3 = Edge(root_node, child3, 0.17, 9)
 		edge3.stats['N'] = 15
 		edge3.stats['Q'] = 0.3
 		root_node.edges.append(edge3)
