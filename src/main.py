@@ -1,4 +1,3 @@
-# from config import CONFIG
 from src.agent import Agent
 from src.checkers.action_encoder import ActionEncoder
 from src.checkers.direction_resolver import DirectionResolver
@@ -15,12 +14,15 @@ config = {
 	'MCTS_SIMULATIONS': 100,
 	'REG_CONST': 0.0001,
 	'LEARNING_RATE': 0.1,
-	'EPISODES_COUNT': 30,
+	'EPISODES_COUNT': 20,
 	'TURNS_UNTIL_TAU0': 10,
 	'SCORING_THRESHOLD': 1.15,
 	'EVAL_EPISODES': 20,
-	'MEMORY_SIZE': 30000,
+	'MEMORY_SIZE': 2000,
 	'MOMENTUM': 0.9,
+	'BATCH_SIZE': 256,
+	'EPOCHS': 1,
+	'TRAINING_LOOPS': 10,
 	'HIDDEN_CNN_LAYERS': [
 		{'filters': 75, 'kernel_size': (4, 4)}
 		, {'filters': 75, 'kernel_size': (4, 4)}
