@@ -50,4 +50,4 @@ class TestDirectionResolver(TestCase):
 		resolver = DirectionResolver()
 		x, y = resolver.get_compressed_coordinates(15)
 		self.assertEqual(x, 3)
-		self.assertEqual(y, 2)
+		self.assertEqual(y, 1)
