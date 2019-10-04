@@ -33,3 +33,21 @@ class TestDirectionResolver(TestCase):
 		resolver = DirectionResolver()
 		self.assertEquals(resolver.resolve_direction_and_distance([10, 15]), (NORTH_WEST, 1))
 		self.assertEquals(resolver.resolve_direction_and_distance([10, 19]), (NORTH_WEST, 2))
+
+	def test_get_coordinates(self):
+		resolver = DirectionResolver()
+		x, y = resolver.get_coordinates(9)
+		self.assertEqual(x, 6)
+		self.assertEqual(y, 2)
+
+	def test_get_coordinates_compressed(self):
+		resolver = DirectionResolver()
+		x, y = resolver.get_compressed_coordinates(9)
+		self.assertEqual(x, 6)
+		self.assertEqual(y, 1)
+
+	def test_get_coordinates_compressed_2(self):
+		resolver = DirectionResolver()
+		x, y = resolver.get_compressed_coordinates(15)
+		self.assertEqual(x, 3)
+		self.assertEqual(y, 2)

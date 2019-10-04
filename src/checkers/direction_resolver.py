@@ -30,3 +30,7 @@ class DirectionResolver:
 		if y % 2 == 1:
 			x = x + 1
 		return x, y
+
+	def get_compressed_coordinates(self, position):
+		x,y = self.get_coordinates(position)
+		return x, y // 2

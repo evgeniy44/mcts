@@ -13,11 +13,21 @@ class TestStateEncoder(TestCase):
 		encoder = StateEncoder()
 
 		encoded_state = encoder.encode(game)
-		self.assertTrue(np.array_equal(encoded_state, np.array([
-			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-			0, 0, 0, 0, 0, 0, 0, 0,
-			-1, -1, -1, - 1, -1, -1, -1, -1, -1, -1, -1, -1
-		])))
+		expected = np.array([
+			[
+				[1, 1, 1, 1, 1, 1, 1, 1],
+				[1, 0, 1, 0, 1, 0, 1, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0]
+			],
+			[
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 1, 0, 1, 0, 1, 0, 1],
+				[1, 1, 1, 1, 1, 1, 1, 1]
+			]
+		], dtype=np.float64)
+		self.assertTrue(np.array_equal(encoded_state, expected))
 
 	def test_encode_black(self):
 		game = Game()
@@ -25,6 +35,18 @@ class TestStateEncoder(TestCase):
 		encoder = StateEncoder()
 
 		encoded_state = encoder.encode(game)
-		self.assertTrue(np.array_equal(encoded_state, np.array([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-																0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, 0, -1, -1, -1, -1,
-																-1, -1, -1, -1])))
+		expected = np.array([
+			[
+				[1, 1, 1, 1, 1, 1, 1, 1],
+				[1, 0, 1, 0, 1, 0, 1, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0]
+			],
+			[
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[0, 0, 0, 0, 0, 0, 0, 0],
+				[1, 0, 0, 1, 0, 1, 0, 1],
+				[1, 1, 1, 1, 1, 1, 1, 1]
+			]
+		], dtype=np.float64)
+		self.assertTrue(np.array_equal(encoded_state, expected))

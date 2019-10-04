@@ -64,17 +64,20 @@ class MatchConductor:
                     memory.commit_stmemory(state, pi)
                 state = state.move(action)
                 done = state.is_over()
+                val = state.get_winner_for_learning()
 
                 if state.is_over() == 1:
                     if memory is not None:
                         for move in memory.stmemory:
-                            if move['state'].whose_turn() == state.whose_turn():
-                                move['value'] = -1 # TODO if only not draw
+                            if move['state'].whose_turn() == state.whose_turn() and val != 0:
+                                move['value'] = -1
+                            elif val != 0:
+                                move['value'] = 1
                             else:
-                                move['value'] = 1 # TODO if only not draw
+                                move['value'] = 0
                         memory.commit_ltmemory()
 
-                    if state.get_winner() == 1 or state.get_winner() == 2:
+                    if val != 0:
                         scores[players[state.opposite_turn()]['name']] = scores[players[state.opposite_turn()]['name']] + 1
                     else:
                         scores['drawn'] = scores['drawn'] + 1
