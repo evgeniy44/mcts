@@ -14,7 +14,7 @@ class ActionEncoder:
 
 	def __init__(self, direction_resolver):
 		self.direction_resolver = direction_resolver
-		self.enc = OneHotEncoder()
+		self.enc = OneHotEncoder(categories='auto')
 		self.enc.fit(np.reshape(np.arange(0, POSITIONS_COUNT * DIRECTIONS_COUNT * DISTANCES_COUNT),
 								newshape=(POSITIONS_COUNT * DIRECTIONS_COUNT * DISTANCES_COUNT, 1)))
 

@@ -35,9 +35,9 @@ config = {
 
 memory = Memory(config['MEMORY_SIZE'])
 
-current_NN = Residual_CNN(config['REG_CONST'], config['LEARNING_RATE'], (1, 32, 1), config['ACTION_SIZE'],
+current_NN = Residual_CNN(config['REG_CONST'], config['LEARNING_RATE'], (2, 4, 8), config['ACTION_SIZE'],
 						  config['HIDDEN_CNN_LAYERS'], config['MOMENTUM'])
-best_NN = Residual_CNN(config['REG_CONST'], config['LEARNING_RATE'], (1, 32, 1), config['ACTION_SIZE'],
+best_NN = Residual_CNN(config['REG_CONST'], config['LEARNING_RATE'], (2, 4, 8), config['ACTION_SIZE'],
 					   config['HIDDEN_CNN_LAYERS'], config['MOMENTUM'])
 
 
