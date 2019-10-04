@@ -36,7 +36,7 @@ class GameTest(TestCase):
 		moves = game.get_possible_moves_from_current_player_perspective()
 		self.assertCountEqual(moves, [[9,13], [9,14], [10, 14], [10,15], [11, 15], [11, 16], [12, 16]])
 
-	def test_move_with_jumps(self): #TODO fix
+	def test_move_with_jumps(self):
 		game = Game()
 
 		game = game.move_with_additional_jumps([12, 16])
