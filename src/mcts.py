@@ -73,7 +73,7 @@ class MCTS:
         return value
 
     def predict_state_value(self, state):
-        preds = self.model.predict(np.reshape(self.state_encoder.encode(state), newshape=(1, 1, 32, 1)))
+        preds = self.model.predict(self.state_encoder.encode(state))
         value = preds[0][0][0]
         policies = preds[1][0]
 

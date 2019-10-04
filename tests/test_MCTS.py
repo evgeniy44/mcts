@@ -136,7 +136,7 @@ class TestMCTS(TestCase):
             , {'filters': 75, 'kernel_size': (4, 4)}
             , {'filters': 75, 'kernel_size': (4, 4)}
         ]
-        model = Residual_CNN(0.0001, 0.1, (1, 32, 1), 32 * 4 * 7, #  TODO use 6x7 dimensions
+        model = Residual_CNN(0.0001, 0.1, (2, 4, 8), 32 * 4 * 7, #  TODO use 6x7 dimensions
                                   HIDDEN_CNN_LAYERS, momentum=0.9)
         game_root = Game()
         root = Node(game_root)
