@@ -30,21 +30,22 @@ class Gen_Model():
 		return load_model( run_archive_folder + game + '/run' + str(run_number).zfill(4) + "/models/version" + "{0:0>4}".format(version) + '.h5', custom_objects={'softmax_cross_entropy_with_logits': softmax_cross_entropy_with_logits})
 
 	def printWeightAverages(self):
-		layers = self.model.layers
-		for i, l in enumerate(layers):
-			try:
-				x = l.get_weights()[0]
-				lg.logger_model.info('WEIGHT LAYER %d: ABSAV = %f, SD =%f, ABSMAX =%f, ABSMIN =%f', i, np.mean(np.abs(x)), np.std(x), np.max(np.abs(x)), np.min(np.abs(x)))
-			except:
-				pass
-		lg.logger_model.info('------------------')
-		for i, l in enumerate(layers):
-			try:
-				x = l.get_weights()[1]
-				lg.logger_model.info('BIAS LAYER %d: ABSAV = %f, SD =%f, ABSMAX =%f, ABSMIN =%f', i, np.mean(np.abs(x)), np.std(x), np.max(np.abs(x)), np.min(np.abs(x)))
-			except:
-				pass
-		lg.logger_model.info('******************')
+		pass
+		# layers = self.model.layers
+		# for i, l in enumerate(layers):
+		# 	try:
+		# 		x = l.get_weights()[0]
+		# 		# lg.logger_model.info('WEIGHT LAYER %d: ABSAV = %f, SD =%f, ABSMAX =%f, ABSMIN =%f', i, np.mean(np.abs(x)), np.std(x), np.max(np.abs(x)), np.min(np.abs(x)))
+		# 	except:
+		# 		pass
+		# lg.logger_model.info('------------------')
+		# for i, l in enumerate(layers):
+		# 	try:
+		# 		x = l.get_weights()[1]
+		# 		lg.logger_model.info('BIAS LAYER %d: ABSAV = %f, SD =%f, ABSMAX =%f, ABSMIN =%f', i, np.mean(np.abs(x)), np.std(x), np.max(np.abs(x)), np.min(np.abs(x)))
+		# 	except:
+		# 		pass
+		# lg.logger_model.info('******************')
 
 
 	def viewLayers(self):

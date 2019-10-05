@@ -73,7 +73,7 @@ class MCTS:
         return value
 
     def predict_state_value(self, state):
-        preds = self.model.predict(self.state_encoder.encode(state))
+        preds = self.model.predict(np.array([self.state_encoder.encode(state)]))
         value = preds[0][0][0]
         policies = preds[1][0]
 
@@ -86,7 +86,7 @@ class MCTS:
 
         # SOFTMAX
         odds = np.exp(policies)
-        probs = odds / np.sum(odds)  ###put this just before the for?
+        probs = odds / np.sum(odds)
 
         return value, probs, allowed_actions
 

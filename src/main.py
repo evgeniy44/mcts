@@ -18,11 +18,11 @@ config = {
 	'TURNS_UNTIL_TAU0': 10,
 	'SCORING_THRESHOLD': 1.15,
 	'EVAL_EPISODES': 20,
-	'MEMORY_SIZE': 2000,
+	'MEMORY_SIZE': 10000,
 	'MOMENTUM': 0.9,
 	'BATCH_SIZE': 256,
 	'EPOCHS': 1,
-	'TRAINING_LOOPS': 10,
+	'TRAINING_LOOPS': 30,
 	'HIDDEN_CNN_LAYERS': [
 		{'filters': 75, 'kernel_size': (4, 4)}
 		, {'filters': 75, 'kernel_size': (4, 4)}

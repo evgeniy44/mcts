@@ -103,4 +103,4 @@ class Agent:
 		# time.sleep(1.0)
 		#
 		# print('\n')
-		self.model.printWeightAverages()
+		# self.model.printWeightAverages()
