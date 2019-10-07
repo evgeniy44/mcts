@@ -1,7 +1,7 @@
 import random
 
 from src.checkers.game import Game
-
+import logging
 
 class MatchConductor:
 
@@ -13,7 +13,7 @@ class MatchConductor:
         scores = {player1.name: 0, "drawn": 0, player2.name: 0}
 
         for episode in range(episodes_count):
-
+            logging.info("Running episode: " + str(episode))
             if self.initial_state is None:
                 state = Game()
             else:
