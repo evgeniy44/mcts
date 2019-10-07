@@ -45,7 +45,7 @@ class Agent:
 
 	def build_mcts(self, state):
 		self.root = Node(state)
-		self.mcts = MCTS(self.root, self.model, StateEncoder(), ActionEncoder(DirectionResolver()), config=self.config)
+		self.mcts = MCTS(self.root, self.model, self.state_encoder, self.action_encoder, config=self.config)
 
 	def change_root_mcts(self, state):
 		self.mcts.root = self.mcts.tree[state.id]

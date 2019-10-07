@@ -5,12 +5,6 @@ from src.node import Node
 from src.puct import PUCT
 
 
-# import config
-#
-# from utils import setup_logger
-# import loggers as lg
-
-
 class MCTS:
 
     def __init__(self, root, model, state_encoder, action_encoder, config):
