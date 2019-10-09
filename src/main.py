@@ -7,41 +7,15 @@ from src.memory import Memory
 from src.model import Residual_CNN
 import logging
 import pickle
-
-config = {
-    'ALPHA': 0.8,
-    'CPUCT': 1,
-    'EPSILON': 0.2,
-    'ACTION_SIZE': 32 * 4 * 7,
-    'MCTS_SIMULATIONS': 100,
-    'REG_CONST': 0.0001,
-    'LEARNING_RATE': 0.1,
-    'EPISODES_COUNT': 20,
-    'TURNS_UNTIL_TAU0': 10,
-    'SCORING_THRESHOLD': 1.2,
-    'EVAL_EPISODES': 10,
-    'MEMORY_SIZE': 10000,
-    'MOMENTUM': 0.9,
-    'BATCH_SIZE': 256,
-    'EPOCHS': 1,
-    'TRAINING_LOOPS': 30,
-    'INITIAL_MODEL_VERSION': 2,
-    'HIDDEN_CNN_LAYERS': [
-        {'filters': 75, 'kernel_size': (4, 4)}
-        , {'filters': 75, 'kernel_size': (4, 4)}
-        , {'filters': 75, 'kernel_size': (4, 4)}
-        , {'filters': 75, 'kernel_size': (4, 4)}
-        , {'filters': 75, 'kernel_size': (4, 4)}
-        , {'filters': 75, 'kernel_size': (4, 4)}
-    ]
-}
+from src.my_configs import config
 
 logging.basicConfig(filename="log.log", level=logging.INFO, format="%(asctime)s: %(levelname)s: %(message)s")
 
 if "INITIAL_MEMORY_VERSION" not in config:
     memory = Memory(config['MEMORY_SIZE'])
 else:
-    memory = pickle.load(open("memory/memory" + str(config["INITIAL_MEMORY_VERSION"]).zfill(4) + ".p", "rb"))
+    logging.info("Loading memory version: " + str(config["INITIAL_MEMORY_VERSION"]))
+    memory = pickle.load(open("memory/" + str(config["INITIAL_MEMORY_VERSION"]).zfill(4) + ".p", "rb"))
 
 current_NN = Residual_CNN(config['REG_CONST'], config['LEARNING_RATE'], (2, 4, 8), config['ACTION_SIZE'],
                           config['HIDDEN_CNN_LAYERS'], config['MOMENTUM'])
