@@ -17,7 +17,7 @@ config = {
     'TRAINING_LOOPS': 30,
     'INITIAL_MODEL_VERSION': 7,
     'INITIAL_MEMORY_VERSION': 18,
-    'TOURNAMENT_VERSIONS': [1, 2, 3],
+    'TOURNAMENT_VERSIONS': [1, 2, 3, 4, 5, 6, 7],
     'HIDDEN_CNN_LAYERS': [
         {'filters': 75, 'kernel_size': (4, 4)}
         , {'filters': 75, 'kernel_size': (4, 4)}

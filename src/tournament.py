@@ -11,12 +11,15 @@ import operator
 
 
 def run():
-	logging.basicConfig(filename="tournament.log", level=logging.INFO, format="%(asctime)s: %(levelname)s: %(message)s")
+	logging.basicConfig(filename="../logs/tournament.log", level=logging.INFO, format="%(asctime)s: %(levelname)s: %(message)s")
 	result_table = {}
 	versions_scores = {}
 	round_n = 1
+	pairs = list(itertools.combinations(config['TOURNAMENT_VERSIONS'], 2))
 
-	for pair in itertools.combinations(config['TOURNAMENT_VERSIONS'], 2):
+	logging.info("Total number of pairs: " + str(len(pairs)))
+
+	for pair in pairs:
 		logging.info("ROUND: " + str(round_n))
 
 		player1 = read_agent(pair[0])
