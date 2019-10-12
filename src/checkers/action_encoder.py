@@ -12,17 +12,16 @@ POSITIONS_COUNT = 32
 class ActionEncoder:
 
 	def __init__(self, direction_resolver):
-		self.action_ids_to_moves = {}
 		self.moves_to_action_ids = {}
 		self.direction_resolver = direction_resolver
 		self.enc = OneHotEncoder(categories='auto')
 		self.enc.fit(np.reshape(np.arange(0, POSITIONS_COUNT * DIRECTIONS_COUNT),
 								newshape=(POSITIONS_COUNT * DIRECTIONS_COUNT, 1)))
 
-	def convert_moves_to_action_ids(self, actions): # refactoring should be fine, easy to convert move to <pos, direction>
+	def convert_moves_to_action_ids(self, actions):
 		return list(map(self.convert_move_to_action_id, actions))
 
-	def convert_move_to_action_id(self, move): # refactoring should be fine, easy to convert move to <pos, direction>
+	def convert_move_to_action_id(self, move):
 		if (move[0], move[1]) in self.moves_to_action_ids:
 			logging.debug("Move: " + str(move) + " is already in cache, retrieving it")
 			return self.moves_to_action_ids[(move[0], move[1])]
