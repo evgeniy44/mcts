@@ -12,7 +12,7 @@ class TestActionEncoder(TestCase):
 		encoder = ActionEncoder(DirectionResolver())
 		actual_action = encoder.convert_action_to_one_hot([1, 5])
 
-		expected_action = np.zeros((1, 32 * 4 * 7))
+		expected_action = np.zeros((1, 32 * 4))
 		expected_action[0, 0] = 1
 		self.assertTrue(np.array_equal(actual_action.toarray(), expected_action))
 
@@ -20,69 +20,59 @@ class TestActionEncoder(TestCase):
 		encoder = ActionEncoder(DirectionResolver())
 		actual_action = encoder.convert_action_to_one_hot([10, 17])
 
-		expected_action = np.zeros((1, 32 * 4 * 7))
-		expected_action[0, 137] = 1
+		expected_action = np.zeros((1, 32 * 4))
+		expected_action[0, 9] = 1
 		self.assertTrue(np.array_equal(actual_action.toarray(), expected_action))
 
 	def test_convert_to_one_hot_2(self):
 		encoder = ActionEncoder(DirectionResolver())
 		actual_action = encoder.convert_action_to_one_hot([5, 32])
 
-		expected_action = np.zeros((1, 32 * 4 * 7))
-		expected_action[0, 740] = 1
+		expected_action = np.zeros((1, 32 * 4))
+		expected_action[0, 100] = 1
 		self.assertTrue(np.array_equal(actual_action.toarray(), expected_action))
 
-	def test_convert_one_hot_to_directed_action_1(self):
+	def test_convert_moves_to_action_ids(self):
 		encoder = ActionEncoder(DirectionResolver())
-		encoded_action = np.zeros((1, 32 * 4 * 7))
-		encoded_action[0, 137] = 1
+		values = encoder.convert_moves_to_action_ids([[10, 17], [10, 15]])
+		self.assertCountEqual(values, [9, 105])
 
-		action, direction, distance = encoder.convert_one_hot_to_directed_action(encoded_action)
-		self.assertEqual(action, 10)
-		self.assertEqual(direction, 1)
-		self.assertEqual(distance, 2)
-
-	def test_convert_one_hot_to_directed_action_2(self):
+	def test_convert_position_direction_distance_to_move_2(self):
 		encoder = ActionEncoder(DirectionResolver())
-		encoded_action = np.zeros((1, 32 * 4 * 7))
-		encoded_action[0, 740] = 1
-
-		action, direction, distance = encoder.convert_one_hot_to_directed_action(encoded_action)
-		self.assertEqual(action, 5)
-		self.assertEqual(direction, 4)
-		self.assertEqual(distance, 6)
-
-	def test_convert_actions_to_values(self):
-		encoder = ActionEncoder(DirectionResolver())
-		values = encoder.convert_actions_to_values([[10, 17], [10, 15]])
-		self.assertCountEqual(values, [137, 105])
-
-	def test_convert_action_id_to_move_1(self):
-		encoder = ActionEncoder(DirectionResolver())
-		move = encoder.convert_action_id_to_move(137)
+		move = encoder.convert_direction_and_distance_to_move(10, 1, 2)
 		self.assertEqual(move, [10, 17])
 
-	def test_convert_action_id_to_move_2(self):
+	def test_convert_action_id_to_position_and_direction(self):
 		encoder = ActionEncoder(DirectionResolver())
-		move = encoder.convert_action_id_to_move(105)
+		move = encoder.convert_action_id_to_position_and_direction(9)
+		self.assertEqual(move, (10, 1))
+
+	def test_convert_action_id_to_true_position_and_direction(self):
+		encoder = ActionEncoder(DirectionResolver())
+		move = encoder.convert_action_id_to_true_position_and_direction(9, 1)
+		self.assertEqual(move, (10, 1))
+
+	def test_convert_action_id_to_true_position_and_direction_2(self):
+		encoder = ActionEncoder(DirectionResolver())
+		move = encoder.convert_action_id_to_true_position_and_direction(9, 2)
+		self.assertEqual(move, (23, 3))
+
+	def test_convert_position_direction_distance_to_move_1(self):
+		encoder = ActionEncoder(DirectionResolver())
+		move = encoder.convert_direction_and_distance_to_move(10, 4, 1)
 		self.assertEqual(move, [10, 15])
 
-	def test_convert_action_id_to_move_true_perspective_1(self):
+	def test_convert_action_id_to_position_and_direction_2(self):
 		encoder = ActionEncoder(DirectionResolver())
-		move = encoder.convert_action_id_to_move_true_perspective(137, 1)
-		self.assertEqual(move, [10, 17])
+		move = encoder.convert_action_id_to_position_and_direction(105)
+		self.assertEqual(move, (10, 4))
 
-	def test_convert_action_id_to_move_true_perspective_2(self):
+	def test_convert_action_id_to_true_position_and_direction_3(self):
 		encoder = ActionEncoder(DirectionResolver())
-		move = encoder.convert_action_id_to_move_true_perspective(105, 1)
-		self.assertEqual(move, [10, 15])
+		move = encoder.convert_action_id_to_true_position_and_direction(105, 1)
+		self.assertEqual(move, (10, 4))
 
-	def test_convert_action_id_to_move_true_perspective_3(self):
+	def test_convert_action_id_to_true_position_and_direction_4(self):
 		encoder = ActionEncoder(DirectionResolver())
-		move = encoder.convert_action_id_to_move_true_perspective(137, 2)
-		self.assertEqual(move, [23, 16])
-
-	def test_convert_action_id_to_move_true_perspective_4(self):
-		encoder = ActionEncoder(DirectionResolver())
-		move = encoder.convert_action_id_to_move_true_perspective(105, 2)
-		self.assertEqual(move, [23, 18])
+		move = encoder.convert_action_id_to_true_position_and_direction(105, 2)
+		self.assertEqual(move, (23, 2))

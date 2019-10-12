@@ -95,7 +95,7 @@ class TestMCTS(TestCase):
         value, probs, allowed_actions = mcts.predict_state_value(game_root)
 
         self.assertEqual(value, 0.25)
-        self.assertCountEqual(allowed_actions, action_encoder.convert_actions_to_values(
+        self.assertCountEqual(allowed_actions, action_encoder.convert_moves_to_action_ids(
             game_root.get_possible_moves_from_current_player_perspective()))
         for idx, prob in enumerate(probs):
             if idx in allowed_actions:
@@ -136,7 +136,7 @@ class TestMCTS(TestCase):
             , {'filters': 75, 'kernel_size': (4, 4)}
             , {'filters': 75, 'kernel_size': (4, 4)}
         ]
-        model = Residual_CNN(0.0001, 0.1, (2, 4, 8), 32 * 4 * 7,
+        model = Residual_CNN(0.0001, 0.1, (2, 4, 8), 32 * 4,
                                   HIDDEN_CNN_LAYERS, momentum=0.9)
         game_root = Game()
         root = Node(game_root)

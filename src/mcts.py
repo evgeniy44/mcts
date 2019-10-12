@@ -25,9 +25,14 @@ class MCTS:
 
         while not current_node.is_leaf():
             simulation_edge = self.puct.puct(current_node, is_root=current_node == self.root)
-            game = current_node.state.move_with_additional_jumps(
-                self.action_encoder.convert_action_id_to_move_true_perspective(simulation_edge.action,
-                                                                               simulation_edge.player_turn))
+
+            (position, direction) = self.action_encoder \
+                .convert_action_id_to_true_position_and_direction(simulation_edge.action, simulation_edge.player_turn)
+            move = self.action_encoder.convert_direction_and_distance_to_move(position, direction, 1)
+            if move not in simulation_edge.in_node.state.get_possible_moves():
+                move = self.action_encoder.convert_direction_and_distance_to_move(position, direction, 2)
+
+            game = current_node.state.move_with_additional_jumps(move)
             done = game.is_over()
             if not done:
                 value = 0
@@ -54,8 +59,13 @@ class MCTS:
     def evaluate_leaf(self, leaf):
         value, probs, allowed_actions = self.predict_state_value(leaf.state)
         for action in allowed_actions:
-            new_state = leaf.state.move_with_additional_jumps(
-                self.action_encoder.convert_action_id_to_move_true_perspective(action, leaf.state.whose_turn()))
+            # can pull (position, direction) from action_encoder and find appropriate move from leaf.state later
+            (position, direction) = self.action_encoder\
+                .convert_action_id_to_true_position_and_direction(action, leaf.state.whose_turn())
+            move = self.action_encoder.convert_direction_and_distance_to_move(position, direction, 1)
+            if move not in leaf.state.get_possible_moves():
+                move = self.action_encoder.convert_direction_and_distance_to_move(position, direction, 2)
+            new_state = leaf.state.move_with_additional_jumps(move)
             if new_state.id not in self.tree:
                 node = Node(new_state)
                 self.add_node(node)
@@ -71,7 +81,7 @@ class MCTS:
         value = preds[0][0][0]
         policies = preds[1][0]
 
-        allowed_actions = self.action_encoder.convert_actions_to_values(
+        allowed_actions = self.action_encoder.convert_moves_to_action_ids(
             state.get_possible_moves_from_current_player_perspective())
 
         mask = np.ones(policies.shape, dtype=bool)

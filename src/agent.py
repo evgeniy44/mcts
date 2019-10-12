@@ -34,7 +34,8 @@ class Agent:
 		for sim in range(self.mcts_simulations):
 			self.simulate()
 		pi, values = self.get_action_values()
-		action, value = self.choose_action(pi, values, tau, state.whose_turn())
+
+		action, value = self.choose_action(pi, values, tau, state)
 		return action, pi, value
 
 	def prepare_mcts_for_next_action(self, state):
@@ -62,7 +63,7 @@ class Agent:
 		pi = pi / (np.sum(pi) * 1.0)
 		return pi, values
 
-	def choose_action(self, pi, values, tau, whose_turn):
+	def choose_action(self, pi, values, tau, state):
 		if tau == 0:
 			actions = np.argwhere(pi == max(pi))
 			action = random.choice(actions)[0]
@@ -72,7 +73,13 @@ class Agent:
 
 		value = values[action]
 
-		return self.action_encoder.convert_action_id_to_move_true_perspective(action, whose_turn), value
+		(position, direction) = self.action_encoder \
+			.convert_action_id_to_true_position_and_direction(action, state.whose_turn())
+		move = self.action_encoder.convert_direction_and_distance_to_move(position, direction, 1)
+		if move not in state.get_possible_moves():
+			move = self.action_encoder.convert_direction_and_distance_to_move(position, direction, 2)
+
+		return move, value
 
 	def replay(self, ltmemory):
 		# lg.logger_mcts.info('******RETRAINING MODEL******')
@@ -90,17 +97,3 @@ class Agent:
 			self.train_overall_loss.append(round(fit.history['loss'][self.config['EPOCHS'] - 1], 4))
 			self.train_value_loss.append(round(fit.history['value_head_loss'][self.config['EPOCHS'] - 1], 4))
 			self.train_policy_loss.append(round(fit.history['policy_head_loss'][self.config['EPOCHS'] - 1], 4))
-
-		# plt.plot(self.train_overall_loss, 'k')
-		# plt.plot(self.train_value_loss, 'k:')
-		# plt.plot(self.train_policy_loss, 'k--')
-		#
-		# plt.legend(['train_overall_loss', 'train_value_loss', 'train_policy_loss'], loc='lower left')
-		#
-		# display.clear_output(wait=True)
-		# display.display(pl.gcf())
-		# pl.gcf().clear()
-		# time.sleep(1.0)
-		#
-		# print('\n')
-		# self.model.printWeightAverages()
